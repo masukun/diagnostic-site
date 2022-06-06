@@ -10,6 +10,7 @@ import Img3Webp from '../../public/images/mv_img_1.webp'
 import Img3Png from '../../public/images/mv_img_1.png'
 import Img4Webp from '../../public/images/mv_text_3.webp'
 import Img4Png from '../../public/images/mv_text_3.png'
+import Link from 'next/link'
 
 
 const Home: NextPage = () => {
@@ -22,95 +23,45 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="block">
-        <div className="padding: 25px 0 40px;">
-          <div className="p-mv__inner">
-            <p className="p-mv__lead">
+        <div className="relative h-[100vh] w-[100%]">
+          <div className="rounded-[4px] box-border h-[592px] max-w-[432px] 
+          py-0 px-[1rem] w-[100%] absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%]">
+            <p className="mt-0 mx-auto mb-5 w-4/5 mt-[20px]">
               <picture className="">
                 <source srcSet={Img1Webp.src} />
                 <img src={Img1Png.src} alt="満足度93% 次世代キャリアスクール開発の最新版" loading="lazy"
-                  width="320" height="200" />
+                  className="w-full" width="320" height="200" />
               </picture>
             </p>
-            <h1 className="p-mv__heading">
-                <picture className="">
-                  <source srcSet={Img2Webp.src} />
-                  <img src={Img2Png.src} alt="強み・弱みx適正職業がたった1分の回答で今すぐわかる適職診断byキャリドラ"
-                    loading="lazy" width="320" height="200" />
-                </picture>
-              </h1>
-              <figure className="p-mv__image">
-                <picture className="">
-                    <source srcSet={Img3Webp.src} />
-                    <img src={Img3Png.src} alt="様々な職種の人々の画像" loading="lazy" width="320"
-                        height="200"/>
-                </picture>
+            <h1 className="my-0 mx-auto w-2/3">
+              <picture className="">
+                <source srcSet={Img2Webp.src} />
+                <img src={Img2Png.src} alt="強み・弱みx適正職業がたった1分の回答で今すぐわかる適職診断byキャリドラ"
+                  className="w-full" loading="lazy" width="320" height="200" />
+              </picture>
+            </h1>
+            <figure className="p-mv__image">
+              <picture className="">
+                <source srcSet={Img3Webp.src} />
+                <img src={Img3Png.src} alt="様々な職種の人々の画像" loading="lazy"
+                  className="w-full" width="320" height="200" />
+              </picture>
             </figure>
             <p className="p-mv__point">
-                <picture className="">
-                    <source srcSet={Img4Webp.src} />
-                    <img src={Img4Png.src} alt="こんなあなたにぴったり！自分の強みを活かせる職業を知りたい/今よりキャリアアップするヒントが欲しい/今の環境を変えて年収も上げたい" loading="lazy"
-                        width="320" height="200" />
-                </picture>
+              <picture className="">
+                <source srcSet={Img4Webp.src} />
+                <img src={Img4Png.src} alt="こんなあなたにぴったり！自分の強みを活かせる職業を知りたい/今よりキャリアアップするヒントが欲しい/今の環境を変えて年収も上げたい" loading="lazy"
+                  className="w-full" width="320" height="200" />
+              </picture>
             </p>
+            <Link href="/question">
+            <button className="fixed text-center mt-[20px] ml-[140px]">
+              <a className="block shadow-lg px-2 py-1  bg-blue-400 text-lg text-white font-semibold rounded  hover:bg-blue-500 hover:shadow-sm hover:translate-y-0.5 transform transition ">無料診断Start!!</a>
+            </button>
+            </Link>
           </div>
         </div>
       </main>
-      {/* <main className={styles.main}>
-        <h1 className="text-3xl font-bold underline">
-          Hello Yamano Next.js!
-        </h1>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main> */}
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
     </div>
   )
 }
