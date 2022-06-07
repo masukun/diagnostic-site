@@ -7,21 +7,19 @@ function Questions(props: any) {
             {props.ques.map((value: any, index: number) => {
                 return (
                     <>
-                        <div className="text-lg font-bold mt-[20px]">{value.content}</div><div className="pt-[20px] flex justify-evenly" key={index}>
+                        <div className="text-lg font-bold mt-[20px]">{value}</div><div className="pt-[20px] flex justify-evenly" key={index}>
                             <ul className="grid grid-cols-3 gap-x-5 m-10 max-w-md mx-auto">
-                                <AnswerButton index={index} pointCalculate={props.pointCalculate}>はい</AnswerButton>
-                                <AnswerButton index={index} pointCalculate={props.pointCalculate}>どちらでもない</AnswerButton>
-                                <AnswerButton index={index} pointCalculate={props.pointCalculate}>いいえ</AnswerButton>
+                                <AnswerButton index={index} pointCalculate={props.pointCalculate} key={index.toString()} >はい</AnswerButton>
+                                <AnswerButton index={index} pointCalculate={props.pointCalculate} key={index.toString()} >どちらでもない</AnswerButton>
+                                <AnswerButton index={index} pointCalculate={props.pointCalculate} key={index.toString()} >いいえ</AnswerButton>
                             </ul>
                         </div>
-                        {(index === 5) && (
-                            <div>
-                                <ChangePageButton select={props.select} content={value.content} nextId={value.nextId} />
-                            </div>
-                        )}
                     </>
                 )
             })}
+            <div>
+                <ChangePageButton display={props.display} nextId={props.nextId} />
+            </div>
         </div>
     )
 }
