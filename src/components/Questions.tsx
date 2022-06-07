@@ -1,10 +1,11 @@
 import React from 'react'
-import { Question } from './index'
+import { ChangePageButton } from './index'
 
 function Questions(props: any) {
     return (
         <div>
-            {props.ques.map((value: any, index: any) => {
+            {props.ques.map((value: any, index: number) => {
+                {console.log(index)}
                 return (
                     <>
                         <div className="text-lg font-bold mt-[20px]">{value.content}</div><div className="pt-[20px] flex justify-evenly">
@@ -23,6 +24,9 @@ function Questions(props: any) {
                                 </li>
                             </ul>
                         </div>
+                        {(index === 5) && (
+                            <ChangePageButton select={props.select} content={value.content} nextId={value.nextId}/>
+                        )}
                     </>
                 )
             })}
