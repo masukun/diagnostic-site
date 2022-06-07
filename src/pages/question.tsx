@@ -51,8 +51,7 @@ export default class App extends React.Component<{}, { questions: Answer[], curr
         return (
             <div>
                 <main className="relative h-[100vh] w-[100%]">
-                    <div className="rounded-[4px] box-border h-[592px] max-w-[432px] 
-      py-0 px-[1rem] w-[100%] absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%]">
+                    <div className="rounded-[4px] box-border h-[592px] max-w-[432px] py-0 px-[1rem] w-[100%] absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%]">
                         <Questions ques={this.state.questions} select={this.selectAnswer}/>
                     </div>
                 </main>

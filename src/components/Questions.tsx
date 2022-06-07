@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChangePageButton } from './index'
+import { ChangePageButton, AnswerButton } from './index'
 
 function Questions(props: any) {
     return (
@@ -10,18 +10,9 @@ function Questions(props: any) {
                     <>
                         <div className="text-lg font-bold mt-[20px]">{value.content}</div><div className="pt-[20px] flex justify-evenly" key={index}>
                             <ul className="grid grid-cols-3 gap-x-5 m-10 max-w-md mx-auto">
-                                <li className="relative">
-                                    <input className="sr-only peer" type="radio" value="yes" name={`answer${index}`} id={`answer_yes${index}`} />
-                                    <label className="flex p-5 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-500 peer-checked:ring-2 peer-checked:border-transparent" htmlFor={`answer_yes${index}`}>はい<br /><br /></label>
-                                </li>
-                                <li className="relative">
-                                    <input className="sr-only peer" type="radio" value="maybe" name={`answer${index}`} id={`answer_maybe${index}`} />
-                                    <label className="flex p-5 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-500 peer-checked:ring-2 peer-checked:border-transparent" htmlFor={`answer_maybe${index}`}>どちらでもない</label>
-                                </li>
-                                <li className="relative">
-                                    <input className="sr-only peer" type="radio" value="no" name={`answer${index}`} id={`answer_no${index}`} />
-                                    <label className="flex p-5 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-500 peer-checked:ring-2 peer-checked:border-transparent" htmlFor={`answer_no${index}`}>いいえ<br /><br /></label>
-                                </li>
+                                <AnswerButton index={value.index}>はい</AnswerButton>
+                                <AnswerButton index={value.index}>どちらでもない</AnswerButton>
+                                <AnswerButton index={value.index}>いいえ</AnswerButton>
                             </ul>
                         </div>
                         {(index === 5) && (
