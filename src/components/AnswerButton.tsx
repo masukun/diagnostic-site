@@ -4,7 +4,7 @@ function AnswerButton(props: any) {
     return (
         <div>
             {(props.children === "はい") && (
-                <li className="relative">
+                <li className="relative" key={props.index}>
                     <input className="sr-only peer" type="radio" value="yes" name={`answer${props.index}`} id={`answer_yes${props.index}`} onClick={() => {props.pointCalculate(props.children)}}/>
                     <label className="flex p-5 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-500 peer-checked:ring-2 peer-checked:border-transparent" htmlFor={`answer_yes${props.index}`}>{props.children}<br /><br /></label>
                 </li>
