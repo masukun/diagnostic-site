@@ -1,10 +1,10 @@
 import { off } from 'process';
-import React, { useState, FC } from 'react'
+import React, { useState, FC, useEffect } from 'react'
 import ReactPaginate from 'react-paginate';
 import Questions from '../components/Questions';
 
 // 0 はい, 1 どちらでもない, 2 いいえ
-type SelectedAnswer = 0 | 1 | 2 
+type SelectedAnswer = 0 | 1 | 2
 
 type Question = {
     [id: number]: {
@@ -95,6 +95,7 @@ type AnswerContent = {
 }
 export default function App() {
     let [answers, setAnswers] = useState<AnswerContent>({})
+    const [point, setPoint] = useState(0);
 
     const handleSetAnswer = (questionId: number, selectedAnswer: SelectedAnswer) => {
         const answerContent = {
@@ -102,156 +103,33 @@ export default function App() {
                 selected: selectedAnswer
             }
         }
-        setAnswers(answerContent)
+        const prevAnswer = { ...answers }
+        const lastAnswer = Object.assign(prevAnswer, answerContent)
+        setAnswers(lastAnswer)
     }
 
-    
+    useEffect(() => {
+        let totalPoints = 0;
+        Object.values(answers).map((answer: any) => {
+            if (answer.selected === 0) {
+                totalPoints = totalPoints + 1;
+            } else if (answer.selected === 1) {
+                totalPoints = totalPoints;
+            } else if (answer.selected === 2) {
+                totalPoints = totalPoints - 1
+            }
+        })
+        setPoint(totalPoints)
+    }, [answers])
+
+
     return (
         <div>
-            <Questions 
-            answers={answers}
-            questions={questions} 
-            handleSetAnswer={handleSetAnswer} />
+            <Questions
+                answers={answers}
+                questions={questions}
+                handleSetAnswer={handleSetAnswer}
+                point={point} />
         </div>
     )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export default class App extends React.Component<{}, { questions:[],currentId: number, dataset: any, pointNumber: number, nextId: string, answers: Answer[] }> {
-//     constructor(props: any) {
-//         super(props);
-//         this.state = {
-//             questions: [],
-//             currentId: 0,
-//             dataset: defaultDataset,
-//             pointNumber: 1,
-//             nextId: "",
-//             answers: [
-//                 {
-//                     questionId: 0,
-//                     selectedBtn: 1,
-//                 },
-//                 {
-//                     questionId: 1,
-//                     selectedBtn: 1,
-//                 },
-//                 {
-//                     questionId: 2,
-//                     selectedBtn: 1,
-//                 },
-//             ]
-//         }
-//         this.pointCalculate = this.pointCalculate.bind(this)
-//     }
-
-//     displayNextQuestion = (nextQuestionId: number) => {
-//         this.setState({
-//             questions: this.state.dataset[nextQuestionId].questions,
-//             currentId: nextQuestionId,
-//             nextId: this.state.dataset[nextQuestionId].nextId,
-//             answers: this.state.dataset[nextQuestionId].answers
-//         })
-//         {
-//             this.state.answers.map((value: any) => {
-//                 console.log(value)
-//             })
-//         }
-//     }
-
-//     // selectAnswer = (selectedAnswer: string, nextQuestionId: string) => {
-//     //     switch (true) {
-//     //         case (nextQuestionId === "init"):
-//     //             this.displayNextQuestion(nextQuestionId)
-//     //             break;
-//     //         default:
-//     //             this.displayNextQuestion(nextQuestionId)
-//     //             break;
-//     //     }
-//     // }
-
-//     pointCalculate = (answerContent: string,) => {
-//         let point = this.state.pointNumber;
-//         if (answerContent === "はい") {
-//             point += 1
-//         } else if (answerContent === "いいえ") {
-//             point -= 1
-//         }
-//         this.setState({ pointNumber: point })
-//     }
-
-//     componentDidMount() {
-//         this.displayNextQuestion(this.state.currentId)
-//     }
-
-//     render() {
-//         return (
-//             <div>
-//                 <main className="relative h-[100vh] w-[100%]">
-//                     <div className="rounded-[4px] box-border h-[592px] max-w-[432px] py-0 px-[1rem] w-[100%] absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%]">
-//                         <Questions ques={this.state.questions} nextId={this.state.nextId} display={this.displayNextQuestion} pointCalculate={this.pointCalculate} />
-//                     </div>
-//                 </main>
-//             </div>
-//         );
-//     }
-// }
