@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { useState } from 'react'
 import ReactPaginate from 'react-paginate';
 
@@ -17,7 +18,7 @@ function Questions(props: any) {
             Object.values(props.questions)
               .slice(offset, offset + perPage).map((questionContent: any) => (
                 <>
-                {console.log(props.answers[questionContent.question_id])}
+                  {console.log(props.answers[questionContent.question_id])}
                   <div className="text-lg font-bold mt-[20px]">{questionContent.text}</div><div className="pt-[20px] flex justify-evenly">
                     {/* // 答え選択用の radio ボタン, こいつらが選択された時のイベントで `setAnswers()` が適切に実行できれば良い */}
                     <ul className="grid grid-cols-3 gap-x-5 m-10 max-w-md mx-auto">
@@ -35,27 +36,48 @@ function Questions(props: any) {
                       </li>
                     </ul>
                   </div>
-
                 </>
               ))
           }
-          <ReactPaginate
-            previousLabel={'<'}
-            nextLabel={'>'}
-            breakLabel={'...'}
-            pageCount={Math.ceil(Object.values(props.questions).length / perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
-            marginPagesDisplayed={2} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
-            pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
-            onPageChange={handlePageChange} // クリック時のfunction
-            containerClassName={'flex items-center justify-center mb-2.5 gap-y-5 gap-x-2'} // ページネーションであるulに着くクラス名
-            pageClassName={'inline-flex w-10 h-10 justify-center text-base font-bold items-center rounded-3xl g-slate-300'}
-            pageLinkClassName={'inline-flex w-10 h-10 justify-center text-base font-bold items-center rounded-3xl rounded-full g-slate-300'}
-            // subContainerClassName={'pages pagination'}
-            activeClassName={'active'} // アクティブなページのliに着くクラス名
-            previousClassName={'inline-flex w-10 h-10 justify-center text-base font-bold items-center rounded-3xl g-slate-300'} // 「<」のliに着けるクラス名
-            nextClassName={'inline-flex w-10 h-10 justify-center text-base font-bold items-center rounded-3xl g-slate-300'} // 「>」のliに着けるクラス名
-            disabledClassName={'pagination__disabled'} // 使用不可の「<,>」に着くクラス名
-          />
+          {(offset === 12) && (
+            <>
+              {(props.point <= 0) && (
+                <Link href="/bigPage">
+                  <button className="text-center mt-[20px] ml-[140px]">
+                    <a className="block shadow-lg px-2 py-1  bg-blue-400 text-lg text-white font-semibold rounded  hover:bg-blue-500 hover:shadow-sm hover:translate-y-0.5 transform transition">結果画面へ!!</a>
+                  </button>
+                </Link>
+              )}
+              {(props.point > 0) && (
+                <Link href="/smallPage">
+                  <button className="text-center mt-[20px] ml-[140px]">
+                    <a className="block shadow-lg px-2 py-1  bg-blue-400 text-lg text-white font-semibold rounded  hover:bg-blue-500 hover:shadow-sm hover:translate-y-0.5 transform transition">結果画面へ!!</a>
+                  </button>
+                </Link>
+              )}
+            </>
+          )}
+          {(offset !== 12) && (
+            <>
+              <ReactPaginate
+                previousLabel={'<'}
+                nextLabel={'>'}
+                breakLabel={'...'}
+                pageCount={Math.ceil(Object.values(props.questions).length / perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
+                marginPagesDisplayed={2} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
+                pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
+                onPageChange={handlePageChange} // クリック時のfunction
+                containerClassName={'flex items-center justify-center mb-2.5 gap-y-5 gap-x-2'} // ページネーションであるulに着くクラス名
+                pageClassName={'inline-flex w-10 h-10 justify-center text-base font-bold items-center rounded-3xl g-slate-300'}
+                pageLinkClassName={'inline-flex w-10 h-10 justify-center text-base font-bold items-center rounded-3xl rounded-full g-slate-300'}
+                // subContainerClassName={'pages pagination'}
+                activeClassName={'active'} // アクティブなページのliに着くクラス名
+                previousClassName={'inline-flex w-10 h-10 justify-center text-base font-bold items-center rounded-3xl g-slate-300'} // 「<」のliに着けるクラス名
+                nextClassName={'inline-flex w-10 h-10 justify-center text-base font-bold items-center rounded-3xl g-slate-300'} // 「>」のliに着けるクラス名
+                disabledClassName={'pagination__disabled'} // 使用不可の「<,>」に着くクラス名
+              />
+            </>
+          )}
         </div>
       </main>
     </div>
