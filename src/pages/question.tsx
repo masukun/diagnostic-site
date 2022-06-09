@@ -1,3 +1,4 @@
+import { off } from 'process';
 import React, { useState, FC } from 'react'
 import ReactPaginate from 'react-paginate';
 import RadioButton from '../components/RadioButton';
@@ -8,63 +9,82 @@ type SelectedAnswer = 0 | 1 | 2 | null
 type Question = {
     [id: number]: {
         text: string;
+        question_id: number;
     }
 }
 // ページ関係なく全ての質問を連想配列として保存
 const questions: Question = {
     0: {
         text: "実行に移す前に、しっかり計画を立てる",
+        question_id: 0,
     },
     1: {
         text: "何事もはっきりさせないと気が済まない",
+        question_id: 1,
     },
     2: {
         text: "他人の問題でも親身になって考える",
+        question_id: 2,
     },
     3: {
         text: "一人の人間と長い間付き合うことができる",
+        question_id: 3,
     },
     4: {
         text: "見栄や評価よりも実利を大切にする",
+        question_id: 4,
     },
     5: {
         text: "目標を達成するまで粘り強く行動できる",
+        question_id: 5,
     },
     6: {
         text: "新しいアイデアを出すのに苦労しない",
+        question_id: 6,
     },
     7: {
         text: "態度や行動で人からよく誤解されることがある",
+        question_id: 7,
     },
     8: {
         text: "要領やコツを人から学び取ることが得意",
+        question_id: 8,
     },
     9: {
         text: "自分が納得したことでないと行動しない",
+        question_id: 9,
     },
     10: {
         text: "ルールは必ず守る",
+        question_id: 10,
     },
     11: {
         text: "いつも同じような人と付き合うことが多い",
+        question_id: 11,
     },
     12: {
         text: "あまり落ち込んだり、クヨクヨすることはない",
+        question_id: 12,
     },
     13: {
         text: "急に飽きることがある",
+        question_id: 13,
     },
     14: {
         text: "何か欲しいと思ったら諦めきれない",
+        question_id: 14,
     },
     15: {
         text: "人を羨ましいと思うことが少ない",
+        question_id: 15,
     },
     16: {
         text: "気分や気持ちを切り替えることが上手",
+        question_id: 16,
     },
     17: {
         text: "控えめな方だ",
+        question_id: 17,
     },
 }
 // question_id には `questions` で割り振られた id が入る
@@ -75,7 +95,6 @@ type AnswerContent = {
 }
 export default function App() {
     let [answers, setAnswers] = useState<AnswerContent>({})
-    let []
     //paginationの実装用
     const [offset, setOffset] = useState(0); // 何番目のアイテムから表示するか
     const perPage: number = 6; // 1ページあたりに表示したいアイテムの数
@@ -93,11 +112,6 @@ export default function App() {
         let page_number = data['selected']; // クリックした部分のページ数が{selected: 2}のような形で返ってくる
         setOffset(page_number * perPage); // offsetを変更し、表示開始するアイテムの番号を変更
     }
-
-
-    // const handleAnswerReset = () => {
-    //     setValue(false);
-    // }
     return (
         <div>
             <div>
@@ -106,14 +120,14 @@ export default function App() {
                         {/* ここで `questions` をループさせて問題文を表示する、ただしページネーションの実装を行う必要がある。 */}
                         {
                             Object.values(questions)
-                                .slice(offset, offset + perPage).map((questionContent: any, question_id: number) => (
+                                .slice(offset, offset + perPage).map((questionContent: any) => (
                                     <>
                                         <div className="text-lg font-bold mt-[20px]">{questionContent.text}</div><div className="pt-[20px] flex justify-evenly">
                                             {/* // 答え選択用の radio ボタン, こいつらが選択された時のイベントで `setAnswers()` が適切に実行できれば良い */}
                                             <ul className="grid grid-cols-3 gap-x-5 m-10 max-w-md mx-auto">
-                                                <li className="relative" key={`yes${question_id.toString()}`}>
-                                                    <input className="sr-only peer" type="radio" name={`answer${question_id}`} id={`answer_yes${question_id}`} checked={answers[question_id].selected === 0} onChange={() => {}} onClick={() => { handleSetAnswer(question_id, 0) }} />
-                                                    <label className="flex p-5 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-500 peer-checked:ring-2 peer-checked:border-transparent" htmlFor={`answer_yes${question_id}`}>はい<br /><br /></label>
+                                                <li className="relative" key={`yes${questionContent.question_id.toString()}`}>
+                                                    <input className="sr-only peer" type="radio" name={`answer${questionContent.question_id}`} id={`answer_yes${questionContent.question_id}`} onChange={() => {}} onClick={() => { handleSetAnswer(questionContent.question_id, 0) }} />
+                                                    <label className="flex p-5 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-500 peer-checked:ring-2 peer-checked:border-transparent" htmlFor={`answer_yes${questionContent.question_id}`}>はい<br /><br /></label>
                                                     {/* <RadioButton
                                                         label="はい"
                                                         value={questionContent.selectAnswer}
@@ -121,9 +135,9 @@ export default function App() {
                                                         question_id={question_id}
                                                         onChange={handleValue(question_id,value)} /> */}
                                                 </li>
-                                                <li className="relative" key={`maybe${question_id.toString()}`}>
-                                                    <input className="sr-only peer" type="radio" name={`answer${question_id}`} id={`answer_maybe${question_id}`} checked={answers[question_id].selected === 1} onClick={() => { handleSetAnswer(question_id, 1) }} />
-                                                    <label className="flex p-5 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-500 peer-checked:ring-2 peer-checked:border-transparent" htmlFor={`answer_maybe${question_id}`}>どちらでもない</label>
+                                                <li className="relative" key={`maybe${questionContent.question_id.toString()}`}>
+                                                    <input className="sr-only peer" type="radio" name={`answer${questionContent.question_id}`} id={`answer_maybe${questionContent.question_id}`}  onClick={() => { handleSetAnswer(questionContent.question_id, 1) }} />
+                                                    <label className="flex p-5 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-500 peer-checked:ring-2 peer-checked:border-transparent" htmlFor={`answer_maybe${questionContent.question_id}`}>どちらでもない</label>
                                                     {/* <RadioButton
                                                         label="どちらでもない"
                                                         value={questionContent.checked}
@@ -131,9 +145,9 @@ export default function App() {
                                                         question_id={question_id}
                                                         onChange={handleValue(question_id,value)} /> */}
                                                 </li>
-                                                <li className="relative" key={`no${question_id.toString()}`}>
-                                                    <input className="sr-only peer" type="radio" name={`answer${question_id}`} id={`answer_no${question_id}`} checked={answers[question_id].selected === 2} onClick={() => { handleSetAnswer(question_id, 2) }} />
-                                                    <label className="flex p-5 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-500 peer-checked:ring-2 peer-checked:border-transparent" htmlFor={`answer_no${question_id}`}>いいえ<br /><br /></label>
+                                                <li className="relative" key={`no${questionContent.question_id.toString()}`}>
+                                                    <input className="sr-only peer" type="radio" name={`answer${questionContent.question_id}`} id={`answer_no${questionContent.question_id}`} onClick={() => { handleSetAnswer(questionContent.question_id, 2) }} />
+                                                    <label className="flex p-5 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-red-500 peer-checked:ring-2 peer-checked:border-transparent" htmlFor={`answer_no${questionContent.question_id}`}>いいえ<br /><br /></label>
                                                     {/* <RadioButton
                                                         label="いいえ"
                                                         value={questionContent.checked}
@@ -148,7 +162,6 @@ export default function App() {
                                 ))
                         }
                         <ReactPaginate
-                            // onClick={() => {handleAnswerReset}}
                             previousLabel={'<'}
                             nextLabel={'>'}
                             breakLabel={'...'}
